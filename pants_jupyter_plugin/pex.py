@@ -82,7 +82,7 @@ class PexManager:
 
     pex: Pex
     _fallback_pex: Optional[Pex] = None
-    _env_mgr: EnvManager = EnvManager()
+    _env_mgr: EnvManager = field(default_factory=EnvManager)
 
     @classmethod
     def load(cls) -> "PexManager":
