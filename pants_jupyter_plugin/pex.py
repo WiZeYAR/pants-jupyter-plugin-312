@@ -77,7 +77,7 @@ class PexManager:
                 + compatible_interpreters_list
             )
 
-    DEFAULT_VERSION = "2.1.66"
+    DEFAULT_VERSION = "2.33.0"
     FALLBACK_VERSION = "2.1.32"
 
     pex: Pex
