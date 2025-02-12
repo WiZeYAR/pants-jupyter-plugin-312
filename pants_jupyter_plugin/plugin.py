@@ -192,7 +192,10 @@ class _PexEnvironmentBootstrapper(Magics):  # type: ignore[misc]  # IPython.core
         def run_async(executor: Awaitable[int], spinner: Awaitable[None]) -> None:
             nest_asyncio.apply()
             loop = asyncio.get_event_loop()
-            tasks: Iterable[Awaitable[Any]] = [executor, spinner]
+            tasks: Iterable[Awaitable[Any]] = [
+                asyncio.create_task(executor), 
+                asyncio.create_task(spinner),
+            ]
             finished, unfinished = loop.run_until_complete(
                 asyncio.wait(tasks, return_when=asyncio.ALL_COMPLETED)
             )
