@@ -263,9 +263,9 @@ class _PexEnvironmentBootstrapper(Magics):  # type: ignore[misc]  # IPython.core
             tmp_root = None
 
         with temporary_dir(root_dir=tmp_root, cleanup=False) as tmp_dir:
-            title = f"[Build] ./pants {goal_name} {pants_target}"
+            title = f"[Build] pants {goal_name} {pants_target}"
             cmd = (
-                f"cd {pants_repo.path} && ./pants --pants-distdir={tmp_dir!r} "
+                f"cd {pants_repo.path} && pants --pants-distdir={tmp_dir!r} "
                 f"{goal_name} {pants_target}"
             )
             tmp_path = pathlib.PosixPath(tmp_dir)
@@ -338,7 +338,7 @@ class _PexEnvironmentBootstrapper(Magics):  # type: ignore[misc]  # IPython.core
 
     def _validate_pants_repo(self, pants_repo: pathlib.Path) -> bool:
         """Validates a given or stored path is a valid pants repo."""
-        return pants_repo.is_dir() and pants_repo.joinpath("pants").is_file()
+        return pants_repo.is_dir() and pants_repo.joinpath("pants.toml").is_file()
 
     @line_magic  # type: ignore[misc]  # IPython.core.magic is untyped.
     def pants_repo(self, pants_repo: str) -> None:
@@ -355,7 +355,7 @@ class _PexEnvironmentBootstrapper(Magics):  # type: ignore[misc]  # IPython.core
 
         # Version check for pants v1 vs v2 flags/behavior.
         version_process = subprocess.run(
-            ["./pants", "--version"],
+            ["pants", "--version"],
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
